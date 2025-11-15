@@ -1,0 +1,764 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+
+<body id="paymentPage">
+  <div id="background"></div>
+
+  <main>
+    <nav>
+      <div id="nav_left">
+        <img src="./images/download.png" alt="Logo" id="logo" width="70px" height="70px">
+        <p><strong>CALEB UNIVERSITY </strong></p>
+
+      </div>
+
+      <div id="right">
+        <ul id="nav_links">
+          <!-- <li><a href="">Home</a></li> -->
+          <li><a href="#schoolFees"> School Fee</a></li>
+          <li><a href="#hostel">Hostel </a></li>
+          <li><a href="#payment_footer">Contact </a></li>
+          <li><a href="./paymentpage.html"> payment</a></li>
+          <li><a href="./index.html">Logout</a></li>
+      </div>
+
+
+
+    </nav>
+
+    <section id="mainpage">
+      <h1 id="welcome_text"></h1>
+      <p style=" font-family: 'Segoe UI', sans-serif;">School Fee Payment and hostel allocation portal for caleb University</p>
+      <p style=" font-family: 'Segoe UI', sans-serif;">Pay your school fees and apply for hostel accommodation—securely, efficiently, and from anywhere.</p>
+      <button><a href="#services-section">learn more</a></button>
+    </section>
+
+    <section id="services-section">
+      <h2>Effortlessly pay school fees online <br> Secure your spot in the hostel easily</h2>
+
+      <div id="card-container">
+        <div id="card">
+          <img
+            src="./images/putting-money-coins-saving-glass-bottle-concept-investment-mutual-fund-finance-business-placed-textbook-content-money-saving-education.jpg">
+          <div id="card-content">
+            <h3>School fee payment </h3>
+            <p>Easily pay your school fees online with our secure system.</p>
+            <button id="learnMore1">learn more &rsaquo;</button>
+          </div>
+        </div>
+
+        <div id="card">
+          <img src="./images/front-view-young-friends-hostel.jpg" alt="Hostel allocation">
+          <div id="card-content">
+            <h3>Hostel allocation </h3>
+            <p>Secure your hostel accommodation based on availability.</p>
+            <button id="learnMore2">learn more &rsaquo;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pop-Up Structure -->
+      <div id="popup" class="popup">
+        <div class="popup-content">
+          <span class="close-button" id="closePopup">&times;</span>
+          <h2>School Fee Payment Process</h2>
+          <p>
+            Our school fee payment system provides a seamless experience for paying tuition online. Parents and guardians can easily log in to their accounts to view outstanding balances and make payments securely. With multiple payment options available, including bank transfers and credit card payments, everyone can find a method that suits their needs. The platform ensures that all transactions are processed promptly, giving users peace of mind. By facilitating timely payments, we help schools maintain their financial health while allowing students to focus on their education without fee-related stress.
+          </p>
+        </div>
+      </div>
+
+      <div id="popup2" class="popup2">
+        <div class="popup-content2">
+          <span class="close-button2" id="closePopup2">&times;</span>
+          <h2>Hostel Allocation</h2>
+          <p>
+            Our hostel allocation system operates on a first-come, first-served basis, ensuring fairness and transparency. Students can select their preferred accommodation options during the registration process. As soon as a payment is confirmed, their place in the hostel queue is secured. This efficient system helps students plan their living arrangements ahead of time. With a variety of hostels to choose from, students can find accommodations that suit their lifestyle and budget. We strive to create a comfortable living environment that complements the educational experience, making campus life enjoyable and convenient.
+          </p>
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="schoolFees">
+
+      <h1 class="headerplan" id="headerplan">School Fees</h1>
+      <p class="textPlan">choose your department and level to view your fees</p>
+
+      <div class="containerFee">
+
+        <div id="deptLevel">
+
+          <form id="paymentForm">
+            <label for="department1">Department:</label>
+            <select id="department1" required>
+              <option value="">Select department</option>
+              <option value="computer_science">Computer Science</option>
+              <option value="micro_biology">micro biology</option>
+              <option value="interrelations">Interrelations</option>
+              <option value="cyber_security">Cyber cyber security</option>
+              <option value="accounting">Accounting</option>
+              <option value="political_science">Political Science</option>
+              <option value="Business_admin">Business Admin</option>
+              <option value="mass_communication">Mass communication</option>
+              <option value="psychology">Psychology</option>
+              <option value="criminology">Criminology</option>
+              <option value="architecture">Architecture</option>
+              <option value="bioChem">biochemistry</option>
+              <option value="Jupep">Jupep</option>
+              <option value="JupepSci">Jupep science</option>
+
+            </select>
+
+            <label for="level">Level:</label>
+            <select id="level1" required>
+              <option value="">Select Level</option>
+              <option value="400">400 Level</option>
+              <option value="Rstudents">300 & 200 Level</option>
+              <option value="Nstudents">100 Level</option>
+              <option value="Jupep">Jupep</option>
+              <option value="JupepSci">Jupep Science</option>
+
+            </select>
+            <button type="button" id="show">show</button>
+            <button style="margin-top: 10px;" type="button" id="add">Add to cart</button>
+
+        </div>
+
+
+        <div id="SchoolFeePlans">
+
+
+          <div class="feePrice">
+            <ul id="Fee400CA" class="fee-details">
+              <li>First Semester: ₦514,500</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦219,500</li>
+              <li>Project Binding: ₦25,000</li>
+              <li>Alumni: ₦10,000</li>
+              <li>Legacy Project: ₦20,000</li>
+              <li>Convocation Fee: ₦120,000</li>
+              <li><strong>Total: ₦949,000</strong></li>
+            </ul>
+            <ul id="Fee200_300CA" class="fee-details">
+              <li>First Semester: ₦514,500</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦219,500</li>
+              <li><strong>Total: ₦774,000</strong></li>
+            </ul>
+            <ul id="Fee100CA" class="fee-details">
+              <li>First Semester: ₦559,500</li>
+              <li>Acceptance Fee: ₦200,000</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦219,500</li>
+              <li>Marticulation Fee: ₦20,000</li>
+              <li><strong>Total: ₦1,039,000</strong></li>
+            </ul>
+
+            <ul id="Fee400R" class="fee-details">
+              <li>First Semester: ₦509,500</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦214,500</li>
+              <li>Project Binding: ₦25,000</li>
+              <li>Alumni: ₦10,000</li>
+              <li>Legacy Project: ₦20,000</li>
+              <li>Convocation Fee: ₦120,000</li>
+              <li><strong>Total: ₦939,000</strong></li>
+            </ul>
+            <ul id="Fee200_300R" class="fee-details">
+              <li>First Semester: ₦509,500</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦214,500</li>
+              <li><strong>Total: ₦764,000</strong></li>
+            </ul>
+            <ul id="Fee100R" class="fee-details">
+              <li>First Semester: ₦554,500</li>
+              <li>ICT Training: ₦30,000</li>
+              <li>Parent Forum: ₦10,000</li>
+              <li>Second Semester: ₦214,500</li>
+              <li>Marticulation Fee: ₦20,000</li>
+              <li>Acceptance Fee: ₦200,000</li>
+              <li><strong>Total: ₦1,029,900</strong></li>
+            </ul>
+            <ul id="FeeJupep" class="fee-details">
+              <li>First Semester: ₦400,000</li>
+              <li>Second Semester: ₦225,000</li>
+              <li><strong>Total: ₦625,000</strong></li>
+            </ul>
+            <ul id="FeeJupepSci" class="fee-details">
+              <li>First Semester: ₦425,000</li>
+              <li>Second Semester: ₦250,000</li>
+              <li><strong>Total: ₦675,000</strong></li>
+            </ul>
+
+
+          </div>
+          <div class="picture">
+            <img src="./images/portrait-young-beautiful-african-girl-white-wall.png" alt="">
+          </div>
+          <!-- </div> -->
+        </div>
+    </section>
+
+    <section class="hostel ">
+
+
+      <!-- </section>   -->
+
+      <section id="hostel" class="hostel">
+
+        <h1 class="headerplan" id="headerplan">Hostel</h1>
+        <p class="textPlan">choose your gender</p>
+        <!-- 
+        <div class="GenderSelect">
+
+            <select id="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+    
+            </div> -->
+
+        <div class="GenderSelect">
+          <select name="" id="genderSelect">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+
+
+        <div class="plan-container">
+          <div class="plan-header">
+            <h1>CHOOSE THE HOSTEL</h1>
+          </div>
+
+          <div class="plans" id="maleHostels">
+            <div class="plans-container">
+              <h4>ELISHA </h4>
+              <h1>₦135,000</h1>
+              <div class="plans-content">
+                <ul>
+                  <li>6 beds in the room</li>
+                  <li>General bathroom </li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="Elisha" data-price="135000">Choose hostel</button>
+              </div>
+            </div>
+
+            <div class="plans-container">
+              <h4>En-suite room </h4>
+              <div class="plans-price">
+                <div class="plans-dollars">
+                  <h1>₦150,000</h1>
+                </div>
+
+              </div>
+              <div class="plans-content">
+                <ul>
+                  <li>6 beds in the room</li>
+                  <li>Bathroom in the room</li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="En-suite room Male 6 beds" data-price="150000">Choose
+                  hostel</button>
+              </div>
+            </div>
+
+            <div class="plans-container">
+              <h4>En-suite room </h4>
+              <div class="plans-price">
+                <h1>₦160,000</h1>
+              </div>
+              <div class="plans-content">
+                <ul>
+                  <li>4 beds in the room</li>
+                  <li>Bathroom in the room</li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="En-suite room Male 4 beds" data-price="160000">Choose
+                  hostel</button>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="plans" id="femaleHostels">
+            <div class="plans-container">
+              <h4>MARY & SUSANNA </h4>
+              <h1>₦125,000</h1>
+              <div class="plans-content">
+                <ul>
+                  <li>6 beds in the room</li>
+                  <li>General bathroom </li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="Mary & Susanna" data-price="125000">Choose hostel</button>
+              </div>
+            </div>
+
+            <div class="plans-container">
+              <h4>En-suite room </h4>
+              <div class="plans-price">
+                <div class="plans-dollars">
+                  <h1>₦150,000</h1>
+                </div>
+
+              </div>
+              <div class="plans-content">
+                <ul>
+                  <li>6 beds in the room</li>
+                  <li>Bathroom in the room</li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="En-suite room Female 6 beds" data-price="150000">Choose
+                  hostel</button>
+              </div>
+            </div>
+
+            <div class="plans-container">
+              <h4>En-suite room </h4>
+              <div class="plans-price">
+                <h1>₦160,000</h1>
+              </div>
+              <div class="plans-content">
+                <ul>
+                  <li>4 beds in the room</li>
+                  <li>Bathroom in the room</li>
+                  <li>Wi-fi</li>
+                  <li>Tuck-shop</li>
+                </ul>
+              </div>
+              <div class="plans-button">
+                <button class="addHostelButton" data-name="En-suite room Female 4 beds" data-price="160000">Choose
+                  hostel</button>
+              </div>
+            </div>
+          </div>
+
+      </section>
+
+      <!-- choose plan end -->
+
+
+    </section>
+
+  
+  </main>
+</body>
+
+<footer id="payment_footer">
+  <div class="container_footer">
+    <div class="contact">
+      <h3>Contact Us</h3>
+      <p><i class="fa-solid fa-envelope"> </i> arowolomalik12@gmail.com</p>
+      <p> <i class="fa-solid fa-phone"></i> 09032423135</p>
+      <p> <i class="fa-solid fa-school"></i> Caleb University, Imota Lagos</p>
+    </div>
+
+    <div class="contact">
+      <h3>Follow us</h3>
+      <p><a href=""><i class="fa-brands fa-facebook"></i> Facebook</a></p>
+      <p><a href=""><i class="fa-brands fa-instagram"></i> Instagram</a></p>
+      <p><a href=""><i class="fa-brands fa-linkedin"></i> Linkedln</a></p>
+
+    </div>
+    <div class="termsCondition">
+      <h3>Policy</h3>
+      <p><a href="">Terms and condition</a></p>
+      <p><a href="">Privacy</a></p>
+      <p><a href="">FAQ</a></p>
+
+    </div>
+
+
+
+  </div>
+
+  <div class="caleb">
+    <p>&copy; 2024 Caleb University. All rights reserved.</p>
+  </div>
+
+
+
+
+</footer>
+
+<script>
+  // Function to display welcome message
+function displayWelcomeMessage() {
+  const firstName = localStorage.getItem("firstName"); // Retrieve the first name from local storage
+  if (firstName) {
+    const welcomeMessage = document.getElementById("welcome_text");
+    // welcomeMessage.style.fontFamily =  'Segoe UI', 'sans-serif';
+    welcomeMessage.textContent = ` ${firstName}, welcome`;
+  }
+}
+
+// Call the function when the page loads
+
+const show = document.getElementById("show");
+const Fee400CA = document.getElementById("Fee400CA");
+const Fee400R = document.getElementById("Fee400R");
+const Fee200_300CA = document.getElementById("Fee200_300CA");
+const Fee200_300R = document.getElementById("Fee200_300R");
+const Fee100CA = document.getElementById("Fee100CA");
+const Fee100R = document.getElementById("Fee100R");
+const FeeJupep = document.getElementById("FeeJupep");
+const FeeJupepSci = document.getElementById("FeeJupepSci");
+
+show.addEventListener("click", function (event) {
+  event.preventDefault();
+
+  const level = document.getElementById("level1").value;
+  const department = document.getElementById("department1").value;
+
+  // Hide all fee details initially
+  hideAllFeeDetails();
+
+  // Check if a level and department are selected
+  if (level === "" || department === "") {
+    alert("Please select a level and department.");
+    return;
+  }
+
+  // Show relevant fee details based on department and level
+  if (department === "computer_science" || department === "architecture") {
+    if (level === "400") {
+      Fee400CA.style.display = "block";
+      Fee400CA.style.transition = "0.2s ease-out";
+    } else if (level === "Rstudents") {
+      Fee200_300CA.style.display = "block";
+    } else if (level === "Nstudents") {
+      Fee100CA.style.display = "block";
+    }
+  } else if (department === "micro_biology") {
+    if (level === "400") {
+      Fee400R.style.display = "block";
+    } else if (level === "Rstudents") {
+      Fee200_300R.style.display = "block";
+    } else if (level === "Nstudents") {
+      Fee100R.style.display = "block";
+    }
+  } else if (
+    department === "cyber_security" ||
+    department === "accounting" ||
+    department === "Business_admin" ||
+    department === "mass_communication" ||
+    department === "psychology" ||
+    department === "criminology" ||
+    department === "bioChem" ||
+    department === "political_science" ||
+    department === "interrelations"
+  ) {
+    if (level === "400") {
+      Fee400R.style.display = "block";
+    } else if (level === "Rstudents") {
+      Fee200_300R.style.display = "block";
+    } else if (level === "Nstudents") {
+      Fee100R.style.display = "block";
+    }
+  } else if (department === "Jupep") {
+    FeeJupep.style.display = "block";
+  } else if (department === "JupepSci") {
+    FeeJupepSci.style.display = "block";
+  }
+});
+
+// Function to hide all fee details
+function hideAllFeeDetails() {
+  Fee400CA.style.display = "none";
+  Fee400R.style.display = "none";
+  Fee200_300CA.style.display = "none";
+  Fee200_300R.style.display = "none";
+  Fee100CA.style.display = "none";
+  Fee100R.style.display = "none";
+  FeeJupep.style.display = "none";
+  FeeJupepSci.style.display = "none";
+}
+
+
+
+// Get the modal
+const popup = document.getElementById("popup");
+
+// Get the button that opens the modal
+const learnMoreButton = document.getElementById("learnMore1");
+
+// Get the <span> element that closes the modal
+const closePopup = document.getElementById("closePopup");
+
+// When the user clicks the button, open the modal
+learnMoreButton.addEventListener("click", function () {
+  popup.style.display = "block";
+});
+
+// When the user clicks on <span> (x), close the modal
+closePopup.addEventListener("click", function () {
+  popup.style.display = "none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener("click", function (event) {
+  if (event.target === popup) {
+    popup.style.display = "none";
+  }
+});
+
+// Get the modal
+const popup2 = document.getElementById("popup2");
+
+// Get the button that opens the modal
+const learnMoreButton2 = document.getElementById("learnMore2");
+
+// Get the <span> element that closes the modal
+const closePopup2 = document.getElementById("closePopup2");
+
+// When the user clicks the button, open the modal
+learnMoreButton2.addEventListener("click", function () {
+  popup2.style.display = "block";
+});
+
+// When the user clicks on <span> (x), close the modal
+closePopup2.addEventListener("click", function () {
+  popup2.style.display = "none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener("click", function (event) {
+  if (event.target === popup2) {
+    popup2.style.display = "none";
+  }
+});
+
+document.getElementById("genderSelect").addEventListener("change", function () {
+  const selectedGender = this.value;
+  const maleHostels = document.getElementById("maleHostels");
+  const femaleHostels = document.getElementById("femaleHostels");
+
+  if (selectedGender === "Male") {
+    maleHostels.style.display = "flex"; // Show male hostels
+    femaleHostels.style.display = "none"; // Hide female hostels
+  } else if (selectedGender === "Female") {
+    maleHostels.style.display = "none"; // Hide male hostels
+    femaleHostels.style.display = "flex"; // Show female hostels
+  }
+});
+
+// Set default display to male hostels
+window.onload = function () {
+  document.getElementById("maleHostels").style.display = "flex"; // Show male hostels by default
+  document.getElementById("femaleHostels").style.display = "none"; // Hide female hostels by default
+  displayWelcomeMessage();
+
+  //  localStorage.clear();
+};
+
+const firstName = localStorage.getItem("firstName") || "student"; // Default to 'student' if not set
+
+const dept = document.getElementById("department1");
+
+console.log(dept[1].value);
+
+// add department and level fee
+function addSchoolFeeToCart() {
+  const dept = document.getElementById("department1").value;
+  const level = document.getElementById("level1").value;
+
+  if (!dept || !level) {
+    alert("Please select a department and level.");
+    return;
+  }
+
+  // lookup fee price based on dept and level(define your fees)
+
+  const departmentFees = {
+    computer_science: {
+      400: 949000,
+      Rstudents: 774000,
+      Nstudents: 1039000,
+    },
+    architecture: {
+      400: 949000,
+      Rstudents: 774000,
+      Nstudents: 1039000,
+    },
+    micro_biology: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    psychology: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    criminology: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    political_science: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    mass_communication: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    Business_admin: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    bioChem: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    cyber_security: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    interrelations: {
+      400: 939000,
+      Rstudents: 764000,
+      Nstudents: 1029900,
+    },
+    Jupep: {
+      FeeJupep: 625000,
+    },
+    Jupepsci: {
+      FeeJupepsci: 625000,
+    },
+  };
+
+  const price = departmentFees[dept]?.[level];
+
+  if (!price) {
+    alert("Fee not available for this selection");
+    return;
+  }
+
+  const departmentName = dept.replace(/_/g, " "); // Replace underscores with spaces
+  localStorage.setItem("department", departmentName);
+
+  // Save level as '300' for 'Rstudents' and '100' for 'Nstudents'
+  if (level === "Rstudents") {
+    localStorage.setItem("level", "300 & 200");
+  } else if (level === "Nstudents") {
+    localStorage.setItem("level", "100");
+  } else {
+    localStorage.setItem("level", level); // Save the original level if it's neither
+  }
+
+  const feeItem = {
+    type: "fee",
+    name: `${dept.replace(/_/g, " ")} - ${level}`,
+    price: price,
+  };
+
+  // Save or update cart in localStorage
+  let cart = JSON.parse(localStorage.getItem("paymentCart")) || [];
+  // Remove old fee if exists
+  cart = cart.filter((item) => item.type !== "fee");
+  cart.push(feeItem);
+  localStorage.setItem("paymentCart", JSON.stringify(cart));
+  alert("School fee added to cart successfully!");
+}
+
+document.getElementById("add").addEventListener("click", function () {
+  event.preventDefault();
+});
+
+const hostelButtons = document.querySelectorAll(".addHostelButton");
+hostelButtons.forEach((button) => {
+  button.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default button behavior
+    const hostelName = this.getAttribute("data-name");
+    const price = parseInt(this.getAttribute("data-price"));
+
+    function addHostelToCart(hostelName, price) {
+      const hostelItem = {
+        type: "hostel",
+        name: hostelName,
+        price: price,
+      };
+
+      let cart = JSON.parse(localStorage.getItem("paymentCart")) || [];
+      cart = cart.filter((item) => item.type !== "hostel"); // Remove old fee if exists
+      // Remove old hostel if exists
+      cart.push(hostelItem);
+      localStorage.setItem("paymentCart", JSON.stringify(cart));
+
+      // Save the selected hostel name to local storage
+      localStorage.setItem("hostel", hostelName);
+    }
+
+    addHostelToCart(hostelName, price);
+    alert(`${hostelName} added to cart!`);
+    alert(`proceed to payment page`);
+  });
+});
+
+document.getElementById("add").addEventListener("click", function (event) {
+  event.preventDefault();
+  addSchoolFeeToCart();
+  
+});
+
+//     if (price !== undefined) {
+//         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+//         const item = {
+//             name: `${dept} ${level}`,
+//             price: price,
+//         };
+//         cart.push(item);
+//         localStorage.setItem('cart', JSON.stringify(cart));
+//         alert(`${item.name} added to cart`);
+
+// }
+
+//     else{
+//         alert("Invalid department or level selected.");
+//     }
+// }
+
+</script>
+
+</html>

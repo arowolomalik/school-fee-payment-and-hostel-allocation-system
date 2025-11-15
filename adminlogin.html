@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <main id="loginPageMain">
+        <div id="loginSection">
+            <img id="caleb_logo" src="./images/download.png" alt="">
+            <h3 style="padding: 10px;">Admin</h3>
+            <form id="loginForm">
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" required>
+
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required>
+
+                <button type="submit">Login</button>
+            </form>
+            <p style="padding: 10px;">Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+            <p style="padding: 10px;"><a href="#" id="showForgotPassword">Forgot Password?</a></p>
+        </div>
+
+        <div id="signUpSection" style="display: none;">
+            <h3>Sign Up</h3>
+            <form id="signUpForm">
+                <label for="signUpFirstName">First Name:</label>
+                <input type="text" id="signUpFirstName" required>
+
+                <label for="signUpLastName">Last Name:</label>
+                <input type="text" id="signUpLastName" required>
+
+                <label for="signUpUsername">Username:</label>
+                <input type="text" id="signUpUsername" required>
+
+                <label for="signUpPassword">Password:</label>
+                <input type="password" id="signUpPassword" required>
+
+                <button type="submit">Create Account</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+
+        <div id="forgotPasswordSection" style="display: none;">
+            <h3 style="padding: 10px;">Forgot Password</h3>
+            <form id="forgotPasswordForm">
+                <label for="forgotEmail" style="padding: 10px;">Email:</label>
+                <input style="padding: 10px;" type="email" id="forgotEmail" required>
+
+                <button style="padding: 10px;" type="submit">Reset Password</button>
+            </form>
+            <p style="padding: 10px;">Remembered your password? <a href="#" id="showLoginFromForgot">Login</a></p>
+        </div>
+    </main>
+
+    <script>
+        // Event listener for the login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('signUpPassword');
+
+            if (username === storedUsername && password === storedPassword) {
+                alert(`Welcome, ${username}!`);
+                window.location.href = 'adminhome.html'; // Replace with your actual payment page URL
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        });
+
+        // Event listener for the sign-up form submission
+        document.getElementById('signUpForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const firstName = document.getElementById('signUpFirstName').value;
+            const lastName = document.getElementById('signUpLastName').value;
+            const username = document.getElementById('signUpUsername').value;
+            const signUpPassword = document.getElementById('signUpPassword').value;
+
+            if (firstName && lastName && username && signUpPassword) {
+                localStorage.setItem('firstName', firstName);
+                localStorage.setItem('lastName', lastName);
+                localStorage.setItem('username', username);
+                localStorage.setItem('signUpPassword', signUpPassword);
+
+                alert(`Account created for ${firstName} ${lastName}!`);
+                document.getElementById('signUpSection').style.display = 'none';
+                document.getElementById('loginSection').style.display = 'block';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Show sign-up form
+        document.getElementById('showSignUp').addEventListener('click', function() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('signUpSection').style.display = 'block';
+        });
+
+        // Show login form
+        document.getElementById('showLogin').addEventListener('click', function() {
+            document.getElementById('signUpSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+        // Show forgot password section
+        document.getElementById('showForgotPassword').addEventListener('click', function() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('forgotPasswordSection').style.display = 'block';
+        });
+
+        // Event listener for the forgot password form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById('forgotEmail').value;
+
+            // Send a request to the backend to send the reset link
+            fetch('http://localhost:3000/api/request-reset', { // Adjust the URL as needed
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Password reset link sent to ${email}.`);
+                    document.getElementById('forgotPasswordSection').style.display = 'none';
+                    document.getElementById('loginSection').style.display = 'block';
+                } else {
+                    alert(data.message); // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+
+        // Show login form from forgot password section
+        document.getElementById('showLoginFromForgot').addEventListener('click', function() {
+            document.getElementById('forgotPasswordSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+        // localStorage.clear()
+    </script>
+</body>
+
+</html>

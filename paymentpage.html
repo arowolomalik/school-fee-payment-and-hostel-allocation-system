@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            font-family: 'Segoe UI', sans-serif;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="paymentPageBody">
+    <div class="backgroundPayment"></div>
+    <main>
+        <nav>
+            <div class="checkoutNav">
+                <div class="backcontainer">
+                    <p class="back" id="back" style="padding-left: 30px;"><i class="fa-solid fa-arrow-left"></i></p>
+                </div>
+                <h1>Checkout</h1>
+            </div>
+        </nav>
+        <div class="cart">
+            <div id="welcomeMessage" style="font-weight:bold; font-family: 'Segoe UI', sans-serif; margin-bottom:20px; font-size: larger;"></div>
+            <ul id="cartItems" class="cart-items"></ul>
+            <div class="cart-total">Total: ₦<span id="cartTotal">0</span></div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <button id="proceedToPayment" disabled>Proceed to Payment</button>
+        </div>
+    </main>
+
+    <!-- Modal for Room Selection -->
+    <div id="roomSelectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeRoomModal">&times;</span>
+            <h2>Select Your Room</h2>
+            <div id="roomSelection"></div>
+            <button id="confirmRoomButton" style="margin-bottom: 10px; width: 100%;">Confirm Room</button>
+        </div>
+    </div>
+
+    <!-- Modal for Receipt -->
+    <div id="receiptModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Payment Successful!</h2>
+            <p>Here are your payment details:</p>
+            <p><strong>Reference Number:</strong> <span id="receiptRefNumber"></span></p>
+            <p><strong>First Name:</strong> <span id="receiptFirstName"></span></p>
+            <p><strong>Last Name:</strong> <span id="receiptLastName"></span></p>
+            <p><strong>Matric Number:</strong> <span id="receiptMatricNumber"></span></p>
+            <p><strong>Department:</strong> <span id="receiptDepartment"></span></p>
+            <p><strong>Level:</strong> <span id="receiptLevel"></span></p>
+            <p><strong>Hostel:</strong> <span id="receiptHostel"></span></p>
+            <p><strong>Room:</strong> <span id="receiptRoom"></span></p>
+            <p><strong>Amount Paid:</strong> ₦<span id="receiptAmountPaid"></span></p>
+            <button id="sendReceiptButton">Send Receipt to Email</button>
+            <button id="goHomeButton" style="display: none; margin-top: 10px;">Go to Home</button>
+        </div>
+    </div>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        document.getElementById("back").addEventListener("click", function() {
+            window.location.href = 'home.html';
+        });
+
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElm = document.getElementById('cartTotal');
+            const cart = JSON.parse(localStorage.getItem('paymentCart')) || [];
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+            let total = 0;
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name}: ₦${item.price}`;
+                cartItemsContainer.appendChild(li);
+                total += item.price;
+            });
+
+            cartTotalElm.textContent = total;
+            document.getElementById('proceedToPayment').disabled = cart.length === 0; // Enable button if cart is not empty
+        }
+
+        window.onload = function() {
+            document.getElementById('welcomeMessage').innerText = `${localStorage.getItem('firstName')} checkout`;
+            renderCart();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstName = localStorage.getItem('firstName');
+            const lastName = localStorage.getItem('lastName');
+            const matricNumber = localStorage.getItem('matricNumber');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.textContent = `Welcome, ${firstName} ${lastName} (${matricNumber})!`;
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartTotalSpan = document.getElementById('cartTotal');
+            const proceedToPaymentButton = document.getElementById('proceedToPayment');
+            const emailInput = document.getElementById('email');
+
+            function updateCartTotal() {
+                let total = cart.reduce((sum, item) => sum + item.price, 0);
+                cartTotalSpan.textContent = total.toLocaleString();
+                proceedToPaymentButton.disabled = cart.length === 0;
+            }
+
+            function renderCart() {
+                const cartItemsList = document.getElementById('cartItems');
+                cartItemsList.innerHTML = '';
+                cart.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.name} - ₦${item.price.toLocaleString()}`;
+                    cartItemsList.appendChild(listItem);
+                });
+                updateCartTotal();
+            }
+
+            renderCart();
+
+            const hostels = {
+                'Elisha': Array(300).fill(null).map(() => []),
+                'En-suite room Male 6 beds': Array(300).fill(null).map(() => []),
+                'En-suite room Male 4 beds': Array(300).fill(null).map(() => []),
+                'Mary & Susanna': Array(300).fill(null).map(() => []),
+                'En-suite room Female 6 beds': Array(300).fill(null).map(() => []),
+                'En-suite room Female 4 beds': Array(300).fill(null).map(() => [])
+            };
+
+            function renderRooms(hostelName) {
+                const roomSelection = document.getElementById('roomSelection');
+                roomSelection.innerHTML = ''; // Clear previous rooms
+                const rooms = hostels[hostelName];
+
+                rooms.forEach((room, index) => {
+                    if (room.length < 6) { // Room is not full
+                        const roomButton = document.createElement('button');
+                        roomButton.style.margin = '3px';
+                        roomButton.textContent = `Room ${index + 1}`;
+                        roomButton.onclick = () => {
+                            selectedRoom = index + 1; // Store selected room number
+                            alert(`You selected Room ${selectedRoom}`);
+                        };
+                        roomSelection.appendChild(roomButton);
+                    }
+                });
+            }
+
+            let selectedRoom = null;
+
+            proceedToPaymentButton.addEventListener('click', function() {
+                const totalAmount = parseFloat(cartTotalSpan.textContent.replace(/,/g, '')) * 100; // Amount in kobo
+                const email = emailInput.value;
+
+                if (!email) {
+                    alert('Please enter your email address.');
+                    return;
+                }
+
+                if (isNaN(totalAmount) || totalAmount === 0) {
+                    alert('Your cart is empty or the total amount is invalid. Please add items to proceed.');
+                    return;
+                }
+
+                let handler = PaystackPop.setup({
+                    key: 'pk_test_41c3718ce37a44dde71876ce4c0a55a1aa8e0cb0',
+                    email: email,
+                    amount: totalAmount,
+                    currency: 'NGN',
+                    ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+                    metadata: {
+                        user: {
+                            firstName: firstName,
+                            lastName: lastName,
+                            matricNumber: matricNumber
+                        },
+                        cart_items: cart
+                    },
+                    callback: function(response) {
+                        document.getElementById('roomSelectionModal').style.display = 'block'; // Show room selection modal
+                        renderRooms(localStorage.getItem('hostel')); // Render available rooms
+                    },
+                    onClose: function() {
+                        alert('Transaction was not completed.');
+                    }
+                });
+
+                handler.openIframe();
+            });
+
+            // Close modal functionality
+            const closeRoomModal = document.getElementById('closeRoomModal');
+            closeRoomModal.onclick = function() {
+                document.getElementById('roomSelectionModal').style.display = 'none';
+            }
+
+            // Confirm room selection
+            document.getElementById('confirmRoomButton').addEventListener('click', function() {
+                if (selectedRoom) {
+                    localStorage.setItem('selectedRoom', selectedRoom);
+                    document.getElementById('roomSelectionModal').style.display = 'none';
+
+                    // Generate a random 10-digit reference number
+                    const referenceNumber = Math.floor(1000000000 + Math.random() * 9000000000);
+
+                    // Populate receipt modal
+                    document.getElementById('receiptRefNumber').textContent = referenceNumber;
+                    document.getElementById('receiptFirstName').textContent = firstName;
+                    document.getElementById('receiptLastName').textContent = lastName;
+                    document.getElementById('receiptMatricNumber').textContent = matricNumber;
+                    document.getElementById('receiptDepartment').textContent = localStorage.getItem('department');
+                    document.getElementById('receiptLevel').textContent = localStorage.getItem('level');
+                    document.getElementById('receiptHostel').textContent = localStorage.getItem('hostel');
+                    document.getElementById('receiptRoom').textContent = selectedRoom;
+                    document.getElementById('receiptAmountPaid').textContent = parseFloat(cartTotalSpan.textContent.replace(/,/g, '')).toLocaleString();
+
+                    document.getElementById('receiptModal').style.display = 'block'; // Show receipt modal
+
+                    // Update local storage with payment details
+                    let studentRecords = JSON.parse(localStorage.getItem('studentRecords')) || [];
+
+                    const amountPaid = parseFloat(cartTotalSpan.textContent.replace(/,/g, ''));
+
+                    // Create or update student record
+                    const studentIndex = studentRecords.findIndex(record => record.matricNumber === matricNumber);
+
+                    if (studentIndex === -1) {
+                        studentRecords.push({
+                            firstName: firstName,
+                            lastName: lastName,
+                            matricNumber: matricNumber,
+                            department: localStorage.getItem('department'),
+                            level: localStorage.getItem('level'),
+                            hostel: localStorage.getItem('hostel'),
+                            room: selectedRoom,
+                            amountPaid: amountPaid,
+                            referenceNumber: referenceNumber, // Add reference number
+                            password: localStorage.getItem('password'),
+                            paid: true
+                        });
+                    } else {
+                        studentRecords[studentIndex].amountPaid = amountPaid;
+                        studentRecords[studentIndex].paid = true; // Mark as paid
+                        studentRecords[studentIndex].room = selectedRoom; // Update room if necessary
+                        studentRecords[studentIndex].referenceNumber = referenceNumber; // Update reference number
+                    }
+
+                    localStorage.setItem('studentRecords', JSON.stringify(studentRecords));
+                } else {
+                    alert('Please select a room before confirming.');
+                }
+            });
+
+            const span = document.getElementsByClassName('close')[0];
+            span.onclick = function() {
+                document.getElementById('receiptModal').style.display = 'none';
+            }
+
+            // Send receipt functionality
+            document.getElementById('sendReceiptButton').addEventListener('click', function() {
+                const receiptDetails = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    matricNumber: matricNumber,
+                    department: localStorage.getItem('department'),
+                    level: localStorage.getItem('level'),
+                    hostel: localStorage.getItem('hostel'),
+                    room: document.getElementById('receiptRoom').textContent,
+                    // referenceNumber: localStorage.getItem(studentRecords.referenceNumber),
+                    amountPaid: parseFloat(cartTotalSpan.textContent.replace(/,/g, ''))
+                };
+
+                // Simulate sending email (replace with actual email sending logic)
+                alert(`Receipt sent to ${emailInput.value}!`);
+
+                // Show "Go to Home" button after sending
+                document.getElementById('goHomeButton').style.display = 'block';
+            });
+
+            // Redirect to home page
+            document.getElementById('goHomeButton').addEventListener('click', function() {
+                window.location.href = 'home.html'; // Adjust path as necessary
+            });
+        });
+    </script>
+</body>
+</html>

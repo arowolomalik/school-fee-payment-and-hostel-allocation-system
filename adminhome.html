@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            font-family: 'Segoe UI', sans-serif;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="#" id="paymentRecordsLink">Payment Records</a>
+        <a href="#" id="studentLoginDetailsLink">Student Login Details</a>
+    </nav>
+
+    <div id="paymentRecords" class="tab">
+        <h1>Payment Records</h1>
+        <input type="text" id="searchInput" placeholder="Search by Reference Number, First Name, Last Name, or Matric Number" />
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Reference Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Matric Number</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th>Hostel</th>
+                    <th>Room</th>
+                    <th>Amount Paid</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentRecords"></tbody>
+        </table>
+    </div>
+
+    <div id="studentLoginDetails" class="tab hidden">
+        <h1>Student Login Details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Matric Number</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody id="loginDetails"></tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Updating Room and Hostel -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeUpdateModal">&times;</span>
+            <h2>Update Room and Hostel</h2>
+            <label for="updateHostel">Hostel:</label>
+            <input type="text" id="updateHostel" placeholder="Enter new hostel" required>
+            <label for="updateRoom">Room:</label>
+            <input type="text" id="updateRoom" placeholder="Enter new room number" required>
+            <button id="saveUpdateButton">Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const studentRecords = JSON.parse(localStorage.getItem('studentRecords')) || [];
+            const recordsTableBody = document.getElementById('studentRecords');
+            const loginDetailsTableBody = document.getElementById('loginDetails');
+            const searchInput = document.getElementById('searchInput');
+            let currentStudentIndex = null;
+
+            // Function to render student payment records
+            function renderStudentRecords(records) {
+                recordsTableBody.innerHTML = '';
+                records.forEach((record, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${record.referenceNumber}</td>
+                        <td>${record.firstName}</td>
+                        <td>${record.lastName}</td>
+                        <td>${record.matricNumber}</td>
+                        <td>${record.department}</td>
+                        <td>${record.level}</td>
+                        <td>${record.hostel}</td>
+                        <td>${record.room}</td>
+                        <td>₦${record.amountPaid.toLocaleString()}</td>
+                        <td>${record.paid ? 'Paid' : 'Not Paid'}</td>
+                        <td><button class="updateButton" data-index="${index}">Update</button></td>
+                    `;
+                    recordsTableBody.appendChild(row);
+                });
+            }
+
+            // Function to render student login details
+            function renderLoginDetails() {
+                loginDetailsTableBody.innerHTML = '';
+                studentRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${record.firstName}</td>
+                        <td>${record.matricNumber}</td>
+                        <td>${record.password || 'N/A'}</td>
+                    `;
+                    loginDetailsTableBody.appendChild(row);
+                });
+            }
+
+            // Initial render of student records
+            renderStudentRecords(studentRecords);
+            renderLoginDetails();
+
+            // Search functionality
+            searchInput.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                const filteredRecords = studentRecords.filter(record => {
+                    return (
+                        record.firstName.toLowerCase().includes(searchTerm) ||
+                        record.referenceNumber.toLowerCase().includes(searchTerm) ||
+                        record.lastName.toLowerCase().includes(searchTerm) ||
+                        record.matricNumber.toLowerCase().includes(searchTerm)
+                    );
+                });
+                renderStudentRecords(filteredRecords);
+            });
+
+            // Navigation functionality
+            const paymentRecordsLink = document.getElementById('paymentRecordsLink');
+            const studentLoginDetailsLink = document.getElementById('studentLoginDetailsLink');
+            const paymentRecordsDiv = document.getElementById('paymentRecords');
+            const studentLoginDetailsDiv = document.getElementById('studentLoginDetails');
+
+            paymentRecordsLink.addEventListener('click', function () {
+                paymentRecordsDiv.classList.remove('hidden');
+                studentLoginDetailsDiv.classList.add('hidden');
+            });
+
+            studentLoginDetailsLink.addEventListener('click', function () {
+                paymentRecordsDiv.classList.add('hidden');
+                studentLoginDetailsDiv.classList.remove('hidden');
+            });
+
+            // Modal functionality for updating room and hostel
+            const updateModal = document.getElementById('updateModal');
+            const closeUpdateModal = document.getElementById('closeUpdateModal');
+            const saveUpdateButton = document.getElementById('saveUpdateButton');
+
+            recordsTableBody.addEventListener('click', function (event) {
+                if (event.target.classList.contains('updateButton')) {
+                    currentStudentIndex = event.target.getAttribute('data-index');
+                    const record = studentRecords[currentStudentIndex];
+                    document.getElementById('updateHostel').value = record.hostel;
+                    document.getElementById('updateRoom').value = record.room;
+                    updateModal.style.display = 'block';
+                }
+            });
+
+            closeUpdateModal.onclick = function() {
+                updateModal.style.display = 'none';
+            }
+
+            saveUpdateButton.onclick = function() {
+                const newHostel = document.getElementById('updateHostel').value;
+                const newRoom = document.getElementById('updateRoom').value;
+
+                if (currentStudentIndex !== null) {
+                    studentRecords[currentStudentIndex].hostel = newHostel;
+                    studentRecords[currentStudentIndex].room = newRoom;
+
+                    localStorage.setItem('studentRecords', JSON.stringify(studentRecords));
+                    renderStudentRecords(studentRecords);
+                    updateModal.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

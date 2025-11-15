@@ -1,0 +1,197 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>School Fee and Hostel Allocation Portal</title>
+</head>
+
+
+   <body >
+    <div class="background"></div>
+
+    <main id="loginPageMain">
+        
+        
+        <div id="loginSection">
+            <img id="caleb_logo" src="./images/download.png" alt="">
+            <h3>Student</h3>
+            <form id="loginForm">
+                <label for="MatricNumber">Matric Number:</label>
+                <input type="text" id="MatricNumber" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+             <p style="padding: 10px;"><a href="#" id="showForgotPassword">Forgot Password?</a></p>
+        </div>
+
+   
+    
+        <div id="signUpSection" style="display: none;">
+            <h3>Sign Up</h3>
+            <form id="signUpForm">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" required>
+        
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" required>
+        
+                <label for="matricNumber">Matric Number:</label>
+                <input type="text" id="matricNumber" required>
+
+                <label for="signUpPassword">Password:</label>
+                <input type="password" id="signUpPassword" required>
+        
+                <button type="submit">Create Account</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+
+
+
+    <div id="forgotPasswordSection" style="display: none;">
+        <h3>Forgot Password</h3>
+        <form id="forgotPasswordForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <button type="submit">Reset Password</button>
+        </form>
+        <p>Remembered your password? <a href="#" id="showLoginFromForgot">Login</a></p>
+    </main>
+
+
+    
+
+
+    
+   
+
+
+
+    
+
+  
+</body>
+<script>
+    // localStorage.clear();
+    // Event listener for the login form submission
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the values from the login form fields
+    const matricNumber = document.getElementById('MatricNumber').value;
+    const password = document.getElementById('password').value;
+
+    // Retrieve the stored matric number and password
+    const storedMatricNumber = localStorage.getItem('matricNumber');
+    const storedPassword = localStorage.getItem('password');
+
+    // Validate the login credentials
+    if (matricNumber === storedMatricNumber && password === storedPassword) {
+        // Simulate successful login
+        alert(`Welcome, ${matricNumber}!`);
+        // Redirect to the payment page
+        window.location.href = 'home.html';
+    } else {
+        alert('Invalid matric number or password. Please try again.');
+    }
+});
+
+
+// Event listener for the sign-up form submission
+document.getElementById('signUpForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the values from the sign-up form fields
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const matricNumber = document.getElementById('matricNumber').value;
+    const signUpPassword = document.getElementById('signUpPassword').value;
+
+    // Simple validation
+    if (firstName && lastName && matricNumber && signUpPassword) {
+        // Store the matric number and password in local storage
+
+        // This is just for demonstration; in a real app, you should use a secure method to store passwords 
+        localStorage.setItem('firstName', firstName);
+        localStorage.setItem('lastName', lastName);
+        localStorage.setItem('matricNumber', matricNumber);
+        localStorage.setItem('password', signUpPassword);
+
+        // Simulate successful sign-up
+        alert(`Account created for ${firstName} ${lastName}!`);
+        // Redirect to the login page
+        document.getElementById('signUpSection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+    } else {
+        alert('Please fill in all fields.');
+    }
+});
+
+// Show sign-up form when "Sign Up" link is clicked
+document.getElementById('showSignUp').addEventListener('click', function() {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('signUpSection').style.display = 'block';
+});
+
+// Show login form when "Login" link is clicked
+document.getElementById('showLogin').addEventListener('click', function() {
+    document.getElementById('signUpSection').style.display = 'none';
+    // document.getElementById('')
+    document.getElementById('loginSection').style.display = 'block';
+});
+
+
+
+// forgot password
+
+
+       document.getElementById('showForgotPassword').addEventListener('click', function() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('forgotPasswordSection').style.display = 'block';
+        });
+
+        // Event listener for the forgot password form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the value from the email field
+            const email = document.getElementById('email').value;
+
+            // Simulate password reset process (you would implement actual logic here)
+            alert(`Password reset link sent to ${email}.`);
+            // Redirect to login page
+            document.getElementById('forgotPasswordSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+        // Show login form from forgot password section
+        document.getElementById('showLoginFromForgot').addEventListener('click', function() {
+            document.getElementById('forgotPasswordSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+
+
+
+
+
+
+
+    
+
+
+
+</script>
+
+ <!-- <footer id="index_footer">
+    <p>&copy; 2024 Caleb University. All rights reserved.</p>
+ </footer> -->
+
+
+</html>
